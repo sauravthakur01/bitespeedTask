@@ -4,10 +4,16 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
+const identityRoutes_1 = __importDefault(require("./routes/identityRoutes"));
+const errorHandler_1 = require("./utils/errorHandler");
 const app = (0, express_1.default)();
-app.get("/", (req, res) => {
-    res.send("Hello World!");
+app.use(express_1.default.json());
+app.use('/api', identityRoutes_1.default);
+app.use(errorHandler_1.errorHandler);
+app.use((req, res) => {
+    res.status(404).json({ error: 'Route not found' });
 });
-app.listen(3000, () => {
-    console.log("Server started on port 3000");
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
+    console.log(`Server started on port ${PORT}`);
 });

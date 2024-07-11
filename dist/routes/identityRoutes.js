@@ -1,0 +1,10 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const express_1 = require("express");
+const identityController_1 = require("../controllers/identityController");
+const identityService_1 = require("../services/identityService");
+const router = (0, express_1.Router)();
+const identityService = new identityService_1.IdentityService();
+const identityController = new identityController_1.IdentityController(identityService);
+router.post('/identify', (req, res) => identityController.identify(req, res));
+exports.default = router;
